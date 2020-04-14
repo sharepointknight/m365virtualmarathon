@@ -1,0 +1,33 @@
+#main {
+    width: 800px ;
+    margin-left: auto ;
+    margin-right: auto ;
+    font-family:verdana, helvetica, sans-serif;
+  }
+#eventLogo {
+    width:100%;
+    display: block;
+    margin-bottom:10px;
+}
+.featured .name
+{
+    font-size: 24px;
+    font-weight: 700;
+    color: #1E0A3C;
+    display: block;
+}
+.featured>div
+{
+    margin-top:30px;
+}
+.featured .title
+{
+    font-size: 16px;
+    color: #6F7287;
+}
+.featured .featurePhoto
+{
+    width:530px;
+    display: block;
+    margin-top:5px;
+}
