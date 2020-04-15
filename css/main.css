@@ -19,15 +19,19 @@
 .featured>div
 {
     margin-top:30px;
+    float: left;
+    width: 350px;
+    margin-right:50px;
+    height:435px;
 }
 .featured .title
 {
-    font-size: 16px;
+    font-size: 14px;
     color: #6F7287;
 }
 .featured .featurePhoto
 {
-    width:530px;
+    width:100%;
     display: block;
     margin-top:5px;
 }
