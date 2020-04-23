@@ -116,3 +116,7 @@ a:hover
     color: #008192;
     font-weight: bold;
 }
+.sz-speaker__name
+{
+    text-transform: capitalize;
+}
