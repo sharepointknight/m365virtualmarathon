@@ -81,3 +81,38 @@ a:hover
 {
     text-decoration: underline;
 }
+.menu
+{
+    border-bottom: 2px solid #732b6b;
+    border-top: 2px solid #732b6b;
+    display:block;
+    height:30px;
+}
+.menu ul
+{
+    margin: 5px;
+}
+.menu li
+{
+    float: left;
+    padding-left:15px;
+    padding-right:15px;
+    list-style-type: none;
+    position: relative;
+    display: block;
+    border-right: 1px solid black;
+}
+.menu .last
+{
+    border: initial;
+}
+.menu a
+{
+    color: #008192;
+    font-weight: bold;
+}
+.menu a:visited
+{
+    color: #008192;
+    font-weight: bold;
+}
