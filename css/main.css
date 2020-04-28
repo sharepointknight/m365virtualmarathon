@@ -43,6 +43,12 @@
 {
     margin-bottom:15px;
 }
+.sponsor > div
+{
+    
+    border: 1px solid #f4f5f7;
+    padding:5px;
+}
 .hidden
 {
     display:none;
