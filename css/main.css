@@ -35,6 +35,14 @@
     display: block;
     margin-top:5px;
 }
+.sponsor .featurePhoto
+{
+    margin-bottom:10px;
+}
+.sponsor
+{
+    margin-bottom:15px;
+}
 .hidden
 {
     display:none;
