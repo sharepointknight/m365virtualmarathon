@@ -24,6 +24,16 @@
     margin-right:50px;
     height:435px;
 }
+.sponsor>div
+{
+    height:600px;
+    margin-right: 38px;
+}
+.sponsor p
+{
+    padding-left: 10px;
+    padding-right: 5px;
+}
 .featured .title
 {
     font-size: 14px;
