@@ -4,6 +4,10 @@
     margin-right: auto ;
     font-family:verdana, helvetica, sans-serif;
   }
+  .clear
+  {
+      clear: both;
+  }
 #eventLogo {
     width:100%;
     display: block;
