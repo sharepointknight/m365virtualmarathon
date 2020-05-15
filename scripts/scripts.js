@@ -11,7 +11,20 @@ function showTimezone()
 
     $("#timezone").text(result);
 }
+function filterLanguage(b)
+{
+    if(b.value == "")
+    {
+        $("li.sz-session--full").show();
+    }
+    else
+    {
+        $('[data-categoryname="language"][data-tagid="' + b.value + '"]').closest("li.sz-session--full").show();
+        $('[data-categoryname="language"][data-tagid!="' + b.value + '"]').closest("li.sz-session--full").hide();
+    }
+}
 
 $(document).ready(function () {
     showTimezone();
+    //<img src="images/English.png" style="width: 20px;float: right;">
 });
