@@ -23,6 +23,10 @@ function filterLanguage(b)
         $('[data-categoryname="language"][data-tagid!="' + b.value + '"]').closest("li.sz-session--full").hide();
     }
 }
+function isContentLoaded()
+{
+    return $(".sz-sessions--list").length > 0;
+}
 
 $(document).ready(function () {
     showTimezone();
