@@ -76,6 +76,15 @@
     font-weight: 300 !important;
     padding: 10px 30px !important;
 }
+.reg-btn-green {
+    color: #fff !important;
+    background: #008192;
+    margin-top: 20px;
+    border-radius: 0 !important;
+    font-size: 24px !important;
+    font-weight: 300 !important;
+    padding: 10px 30px !important;
+}
 .btn {
     display: inline-block;
     padding: 6px 12px;
@@ -151,4 +160,23 @@ a:hover
 .sz-speaker__name, .sz-session__speakers a
 {
     text-transform: capitalize;
+}
+
+ul.features
+{
+    float: right;
+    top: -25px;
+    position: relative;
+}
+ul.features li{
+    float: left; 
+    padding-left: 15px !important;
+}
+ul.features img.language
+{
+    width:48px;
+}
+ul.features img.noRecord
+{
+    width:32px;
 }

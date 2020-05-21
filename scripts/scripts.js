@@ -25,7 +25,7 @@ function filterLanguage(b)
 }
 function isContentLoaded()
 {
-    return $(".sz-sessions--list").length > 0;
+    return $(".sz-sessions--list").length > 0 || $(".sz-tabs").length > 0;
 }
 
 $(document).ready(function () {
