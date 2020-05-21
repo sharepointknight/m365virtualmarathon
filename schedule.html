@@ -16,6 +16,78 @@
     </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>    
     <script type="text/javascript" src="scripts/scripts.js"></script>
+    <script type="text/javascript">
+        function customizeCard()
+        {
+            var sessionContainer = $(".sz-session--full");
+            var details = $( "<ul class='features'></ul>" );
+            if(sessionContainer.find('[data-tag-id="49829"]').length > 0)
+            {
+                details.append("<li><img class='language' src='images/English.png' alt='English' tooltip='English' title='English' /></li>");
+            }
+            else if(sessionContainer.find('[data-tag-id="49831"]').length > 0)
+            {
+                details.append("<li><img class='language' src='images/French.png' alt='French' tooltip='French' title='French' /></li>");
+            }
+            else if(sessionContainer.find('[data-tag-id="51156"]').length > 0)
+            {
+                details.append("<li><img class='language' src='images/Germany.png' alt='German' tooltip='German' title='German' /></li>");
+            }
+            else if(sessionContainer.find('[data-tag-id="50359"]').length > 0)
+            {
+                details.append("<li><img class='language' src='images/Japanese.png' alt='Japanese' tooltip='Japanese' title='Japanese' /></li>");
+            }
+            else if(sessionContainer.find('[data-tag-id="50478"]').length > 0)
+            {
+                details.append("<li><img class='language' src='images/Korean.png' alt='Korean' tooltip='Korean' title='Korean' /></li>");
+            }
+            else if(sessionContainer.find('[data-tag-id="50360"]').length > 0)
+            {
+                details.append("<li><img class='language' src='images/Portuguese.png' alt='Portuguese' tooltip='Portuguese' title='Portuguese' /></li>");
+            }
+            else if(sessionContainer.find('[data-tag-id="49830"]').length > 0)
+            {
+                details.append("<li><img class='language' src='images/Spanish.png' alt='Spanish' tooltip='Spanish' title='Spanish' /></li>");
+            }
+            //No Recording
+            var recording = sessionContainer.find('[data-tag-id="51263"]');
+            if(recording.length > 0 && recording.text() == "No")
+            {
+                details.append("<li><img class='noRecord' src='images/NoRecording.png' alt='Session recording will not be posted' tooltip='Session recording will not be posted' title='Session recording will not be posted'/></li>");
+            }
+            //English 49829
+            //French 49831
+            //German 51156
+            //Korean 50478
+            //Portuguese 50360
+            //Spanish 49830
+            //data-tag-id="51263"
+            sessionContainer.append(details)
+        }
+        function sessionClicked()
+        {
+            window.setTimeout(customizeCard,500);
+        }
+        function contentLoaded()
+        {
+            $(".sz-session__card .sz-session__title a").click(sessionClicked);
+            return;
+            var filteredLanguage = "50359";
+            $("#filterDiv").hide();
+            $('[data-categoryname="language"][data-tagid!="' + filteredLanguage + '"]').closest("li.sz-session--full").hide();
+        }
+        function checkContentLoaded()
+        {
+            if(isContentLoaded())
+            {
+                window.clearInterval(szContentLoaded);
+                contentLoaded();
+            }
+        }
+        $(document).ready(function () {
+            window.szContentLoaded = window.setInterval(checkContentLoaded,500);
+        });
+    </script>
 </head>
 <body>
     <div id="main">
