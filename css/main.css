@@ -128,6 +128,7 @@ a:hover
 .menu ul
 {
     margin: 5px;
+    margin-left: -23;
 }
 .menu li
 {
@@ -138,6 +139,10 @@ a:hover
     position: relative;
     display: block;
     border-right: 1px solid black;
+}
+.menu li.first
+{
+    padding-left:0px;
 }
 .menu .last
 {
@@ -179,4 +184,8 @@ ul.features img.language
 ul.features img.noRecord
 {
     width:32px;
+}
+.sponsorRoom
+{
+    display:none;
 }
