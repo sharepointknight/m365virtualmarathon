@@ -19,6 +19,11 @@
     <script type="text/javascript">
         function customizeCard()
         {
+            if($(".sz-session__questions a").length > 0)
+            {
+                $(".sz-session__questions dt").remove();
+                $(".sz-session__questions a").text("Join").addClass("btn reg-btn-green");
+            }
             var sessionContainer = $(".sz-session--full");
             var details = $( "<ul class='features'></ul>" );
             if(sessionContainer.find('[data-tag-id="49829"]').length > 0)
@@ -109,9 +114,22 @@
         </p>
 
         <p><b><i>Times shown for sessions are in <span id="timezone">your local time</span>.</i></b></p>
-        <p>iCal version of the schedule is available <a href="https://sessionize.com/api/v2/dumys1c8/view/All">here</a> if you would like to import the full list into your calendar.</p>
     </div>
-    <script type="text/javascript" src="https://sessionize.com/api/v2/zp4yqoqp/view/GridSmart"></script>
+    <script type="text/javascript" src="https://sessionize.com/api/v2/vzg1kn6x/view/GridSmart"></script>
     
 </body>
 </html>
+<!--
+
+    <li data-tag-id="51263" class="sz-tag sz-tag_22307-51263 sessionize-group-recorded">No</li>
+    <li data-tag-id="49829" class="sz-tag sz-tag_21975-49829 sessionize-group-language">English</li>
+
+    <dl class="sz-session__questions">
+        <dt data-questionid="22470">
+            JoinLink
+        </dt>
+        <dd data-questionid="22470">
+                    <a href="http://www.ryanschouten.com" target="_blank">www.ryanschouten.com</a>
+        </dd>
+    </dl>
+-->
