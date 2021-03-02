@@ -69,7 +69,7 @@
 }
 .reg-btn {
     color: #fff;
-    background: #732b6b;
+    background: #5c3d87;
     margin-top: 20px;
     border-radius: 0 !important;
     font-size: 24px !important;
@@ -78,7 +78,7 @@
 }
 .reg-btn-green {
     color: #fff !important;
-    background: #008192;
+    background: #a180c3;
     margin-top: 20px;
     border-radius: 0 !important;
     font-size: 24px !important;
@@ -120,8 +120,8 @@ a:hover
 }
 .menu
 {
-    border-bottom: 2px solid #732b6b;
-    border-top: 2px solid #732b6b;
+    border-bottom: 2px solid #5c3d87;
+    border-top: 2px solid #5c3d87;
     display:block;
     height:30px;
 }
@@ -150,12 +150,12 @@ a:hover
 }
 .menu a
 {
-    color: #008192;
+    color: #a180c3;
     font-weight: bold;
 }
 .menu a:visited
 {
-    color: #008192;
+    color: #a180c3;
     font-weight: bold;
 }
 
