@@ -189,4 +189,4 @@ ul.features img.noRecord
 {
     display:none;
 }
-.sz-session__time { display: none !important}
+.sz-session__time, .sz-session__room { display: none !important}
