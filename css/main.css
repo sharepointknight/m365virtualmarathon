@@ -49,6 +49,7 @@
     width:100%;
     display: block;
     margin-top:5px;
+    max-height:100px;
 }
 .sponsor .featurePhoto
 {
