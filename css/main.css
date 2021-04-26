@@ -135,8 +135,8 @@ a:hover
 .menu li
 {
     float: left;
-    padding-left:15px;
-    padding-right:15px;
+    padding-left:12px;
+    padding-right:12px;
     list-style-type: none;
     position: relative;
     display: block;
