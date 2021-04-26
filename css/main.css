@@ -28,10 +28,11 @@
     margin-right:50px;
     height:435px;
 }
-.sponsor>div
-{
-    height:600px;
-    margin-right: 38px;
+.sponsor>div {
+    float: initial;
+    width: initial;
+    margin-right:initial;
+    height:initial;
 }
 .sponsor p
 {
@@ -51,6 +52,7 @@
 }
 .sponsor .featurePhoto
 {
+    width: initial;
     margin-bottom:10px;
 }
 .sponsor
@@ -59,8 +61,7 @@
 }
 .sponsor > div
 {
-    
-    border: 1px solid #f4f5f7;
+    /*border: 1px solid lightgray;*/
     padding:5px;
 }
 .hidden
