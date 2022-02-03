@@ -71,13 +71,14 @@
 }
 .reg-btn {
     color: #fff;
-    background: #5c3d87;
+    background: #6667ab;
     margin-top: 20px;
     border-radius: 0 !important;
     font-size: 24px !important;
     font-weight: 300 !important;
     padding: 10px 0px !important;
     width: 100%;
+    text-transform: uppercase;
 }
 .reg-btn-green {
     color: #fff !important;
@@ -123,8 +124,8 @@ a:hover
 }
 .menu
 {
-    border-bottom: 2px solid #5c3d87;
-    border-top: 2px solid #5c3d87;
+    /*border-bottom: 2px solid #6667ab;
+    border-top: 2px solid #6667ab;*/
     display:block;
     height:30px;
 }
@@ -136,29 +137,32 @@ a:hover
 .menu li
 {
     float: left;
-    padding-left:12px;
-    padding-right:12px;
+    padding:5px;
     list-style-type: none;
     position: relative;
     display: block;
-    border-right: 1px solid black;
+    /*border-right: 1px solid black;*/
+    border: 1px solid #6667ab;
+    border-radius: 10px;
+    text-transform: uppercase;
+    margin-right:5px;
 }
 .menu li.first
 {
-    padding-left:0px;
+    /*padding-left:0px;*/
 }
 .menu .last
 {
-    border: initial;
+    /*border: initial;*/
 }
 .menu a
 {
-    color: #242526;
+    color: #6667ab;
     font-weight: bold;
 }
 .menu a:visited
 {
-    color: #242526;
+    color: #6667ab;
     font-weight: bold;
 }
 
