@@ -1118,6 +1118,7 @@ var Schedule = /** @class */ (function (_super) {
                 _loop_1(i_1);
             }
         }
+        lastStart = lastStart.sort();
         var eventDates = Object.keys(this.state.Schedule);
         return React.createElement(React.Fragment, null,
             React.createElement("div", { className: "header" },
