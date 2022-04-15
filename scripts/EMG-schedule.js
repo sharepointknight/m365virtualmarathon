@@ -1041,12 +1041,12 @@ var Schedule = /** @class */ (function (_super) {
     __extends(Schedule, _super);
     function Schedule(props) {
         var _this = _super.call(this, props) || this;
-        _this.state = { Sessions: [], Schedule: null, SelectedDate: null, Speakers: [], SelectedSession: null };
+        _this.state = { Sessions: [], Schedule: null, SelectedDate: null, Speakers: [], SelectedSession: null, Filters: [] };
         return _this;
     }
     Schedule.prototype.getData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var sessionizeService, sessions, schedule, speakers, selectedDate;
+            var sessionizeService, sessions, schedule, speakers, selectedDate, filters, idx, f;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -1061,7 +1061,12 @@ var Schedule = /** @class */ (function (_super) {
                     case 3:
                         speakers = _a.sent();
                         selectedDate = Object.keys(schedule)[0];
-                        this.setState({ Sessions: sessions, Schedule: schedule, SelectedDate: selectedDate, Speakers: speakers });
+                        filters = [];
+                        for (idx = 0; idx < this.props.filters.length; idx++) {
+                            f = this.props.filters[idx];
+                            filters[f] = "";
+                        }
+                        this.setState({ Sessions: sessions, Schedule: schedule, SelectedDate: selectedDate, Speakers: speakers, Filters: filters });
                         return [2 /*return*/];
                 }
             });
@@ -1078,6 +1083,52 @@ var Schedule = /** @class */ (function (_super) {
     };
     Schedule.prototype.setSelectedDate = function (seldate) {
         this.setState({ SelectedDate: seldate });
+    };
+    Schedule.prototype.onFilterChange = function (event) {
+        var id = event.target.id;
+        var value = event.target.value;
+        var data = this.state.Filters;
+        data[id] = value;
+        this.setState({ Filters: data });
+    };
+    Schedule.prototype.filtered = function (session) {
+        var keys = Object.keys(this.state.Filters);
+        var filtered = true;
+        var noFilter = true;
+        for (var idx = 0; idx < keys.length; idx++) {
+            var key = keys[idx];
+            var filterVal = this.state.Filters[key];
+            if (session[key] == null) {
+                return false;
+            }
+            if (filterVal == "") {
+                continue;
+            }
+            else if (filterVal === "blank") {
+                noFilter = false;
+                if (session[key].length === 0) {
+                    continue;
+                }
+                else {
+                    filtered = false;
+                    break;
+                }
+            }
+            else {
+                noFilter = false;
+                if (session[key].indexOf(filterVal) >= 0) {
+                    continue;
+                }
+                else {
+                    filtered = false;
+                    break;
+                }
+            }
+        }
+        if (noFilter) {
+            filtered = false;
+        }
+        return filtered;
     };
     Schedule.prototype.render = function () {
         var _this = this;
@@ -1103,6 +1154,9 @@ var Schedule = /** @class */ (function (_super) {
             gridTemplateColumns: "115px"
         };
         var roomNames = Object.keys(todaySchedule).sort();
+        var filters = null;
+        var filterVals = {};
+        debugger;
         for (var i = 0; i < roomNames.length; i++) {
             var sessions = todaySchedule[roomNames[i]];
             gridStyle.gridTemplateColumns += " 200px";
@@ -1117,10 +1171,58 @@ var Schedule = /** @class */ (function (_super) {
             for (var i_1 = 0; i_1 < sessions.length; i_1++) {
                 _loop_1(i_1);
             }
+            if (this.props.filters != null) {
+                var filterList = [];
+                var _loop_2 = function (idx) {
+                    var f = this_1.props.filters[idx];
+                    if (Object.keys(filterVals).indexOf(f) < 0) {
+                        filterVals[f] = [];
+                    }
+                    var rawValues = [];
+                    var valuesTemp = sessions.map(function (s) {
+                        if (s[f] == null) {
+                            return 0;
+                        }
+                        if (s[f].length === 0) {
+                            return 0;
+                        }
+                        else {
+                            return s[f];
+                        }
+                    });
+                    for (var idx1 = 0; idx1 < valuesTemp.length; idx1++) {
+                        rawValues = rawValues.concat(valuesTemp[idx1]);
+                    }
+                    filterVals[f] = filterVals[f].concat(rawValues);
+                };
+                var this_1 = this;
+                for (var idx = 0; idx < this.props.filters.length; idx++) {
+                    _loop_2(idx);
+                }
+            }
         }
         lastStart = lastStart.sort();
         var eventDates = Object.keys(this.state.Schedule);
+        if (Object.keys(filterVals).length > 0) {
+            filters = this.props.filters.map(function (f) {
+                filterVals[f] = filterVals[f].filter(function (value, index, self) { return self.indexOf(value) === index; }).sort();
+                return React.createElement("span", null,
+                    React.createElement("h3", null, f),
+                    React.createElement("select", { value: _this.state.Filters[f], id: f, onChange: _this.onFilterChange.bind(_this) },
+                        React.createElement("option", { value: "" }, "All"),
+                        filterVals[f].map(function (val) {
+                            if (val == 0) {
+                                return React.createElement("option", { value: "blank" }, "Blank");
+                            }
+                            else {
+                                return React.createElement("option", { value: val }, val);
+                            }
+                        })));
+            });
+        }
+        //.filter((value, index, self) => self.indexOf(value) === index)
         return React.createElement(React.Fragment, null,
+            filters,
             React.createElement("div", { className: "header" },
                 (eventDates.length > 1) ? React.createElement("ul", { className: "dates" }, Object.keys(this.state.Schedule).map(function (s) {
                     var day = dayjs(s);
@@ -1143,15 +1245,16 @@ var Schedule = /** @class */ (function (_super) {
                                     React.createElement("b", null, r))),
                             sessions.map(function (s, idx) {
                                 var session = null;
+                                var filtered = _this.filtered(s);
                                 //debugger;
                                 var tIdx = lastStart.indexOf(s.startsAt);
                                 if (s.isPlenumSession) {
                                     var width = roomNames.length * 200;
-                                    session = React.createElement("span", { className: "gridItem sessionItem plenum", style: { gridArea: tIdx + 2 + " / 2", width: width + "px" }, onClick: _this.setSelectedSession.bind(_this, s) },
+                                    session = React.createElement("span", { className: "gridItem sessionItem plenum " + ((filtered) ? "filtered" : ""), style: { gridArea: tIdx + 2 + " / 2", width: width + "px" }, onClick: _this.setSelectedSession.bind(_this, s) },
                                         React.createElement(ScheduleSession_1.default, { Session: s, Speakers: _this.state.Speakers }));
                                 }
                                 else {
-                                    session = React.createElement("span", { className: "gridItem sessionItem", style: { gridArea: tIdx + 2 + " / " + (ridx + 2) }, onClick: _this.setSelectedSession.bind(_this, s), key: s.id },
+                                    session = React.createElement("span", { className: "gridItem sessionItem " + ((filtered) ? "filtered" : ""), style: { gridArea: tIdx + 2 + " / " + (ridx + 2) }, onClick: _this.setSelectedSession.bind(_this, s), key: s.id },
                                         React.createElement(ScheduleSession_1.default, { Session: s, Speakers: _this.state.Speakers }));
                                 }
                                 return session;
@@ -2215,10 +2318,14 @@ var ScheduleSession = /** @class */ (function (_super) {
         var speakers = this.props.Session.speakers.map(function (sp) {
             return _this.props.Speakers[sp.id];
         });
-        return React.createElement("div", null,
-            React.createElement("div", { className: "speakerDetails" },
+        var speakerDetails = null;
+        if (speakers.length > 0) {
+            speakerDetails = React.createElement("div", { className: "speakerDetails" },
                 React.createElement("img", { src: speakers[0].profilePicture, alt: speakers[0].fullName, className: "speakerImage", key: speakers[0].id }),
-                React.createElement("span", { className: "speakerName" }, speakers[0].fullName)),
+                React.createElement("span", { className: "speakerName" }, speakers[0].fullName));
+        }
+        return React.createElement("div", null,
+            speakerDetails,
             React.createElement("h2", null, this.props.Session.title),
             (this.props.Session.Language != null && this.props.Session.Language.length > 0) ? React.createElement("img", { className: "sessionLanguage", src: "images/" + this.props.Session.Language + ".png", alt: this.props.Session.Language }) : null);
     };
@@ -2290,12 +2397,12 @@ var React = __webpack_require__(1);
 var ReactDOM = __webpack_require__(12);
 var Schedule_1 = __webpack_require__(11);
 window["EMG"] = window["EMG"] || {};
-window["EMG"].renderSchedule = function (embedUrl, containingElement) {
+window["EMG"].renderSchedule = function (embedUrl, containingElement, filters) {
     if (typeof (containingElement) === "string") {
         containingElement = document.getElementById(containingElement);
     }
     if (typeof (containingElement) === "object" && containingElement.innerText != null) {
-        ReactDOM.render(React.createElement(Schedule_1.default, { embedURL: embedUrl }), containingElement);
+        ReactDOM.render(React.createElement(Schedule_1.default, { embedURL: embedUrl, filters: filters }), containingElement);
     }
     else {
         console.error("EMG: Unable to render schedule due to invalid parameter");
@@ -2394,7 +2501,7 @@ var SessionizeService = /** @class */ (function () {
                                         x[cat.name] = cat.categoryItems[0].name;
                                     }
                                     else {
-                                        x[cat.name] = cat.categoryItems;
+                                        x[cat.name] = cat.categoryItems.map(function (X) { return X.name; });
                                     }
                                 }
                             }
