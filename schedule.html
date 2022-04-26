@@ -7,6 +7,138 @@
     <title>Microsoft 365 Virtual Marathon - Schedule</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163663799-1"></script>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <style>
+            .header {
+                text-align: center;
+            }
+            .dates {
+                margin: 0 auto;
+                display:inline-block;
+            }
+            .dates .datePicker {
+                float: left;
+                padding: 5px;
+                margin-left: 10px;
+                cursor: pointer;
+                list-style-type: none;
+                background-color: #6667ab;
+                color: white;
+                border-radius: 5px;
+            }
+            .sessionItem {
+                width: 200px;
+                height: 100px;                
+            }
+            .sessionItem h2 {
+                font-size:12px;
+                clear: both;
+            }
+            .sessionItem .speakerImage {
+                float: left;
+                width: 25px;
+                border-radius: 5px;
+            }
+            .sessionItem .speakerName {
+                float:left;
+                padding-left: 5px;
+                padding-top: 5px;
+                font-size: smaller;
+            }
+            .sessionItem .speakerDetails {
+                margin-bottom: 5px;
+                height: 25px;
+            }
+            .sessionItem > div {
+                background-color: #6667ab;
+                color:#ffffff;
+                margin: 5px;
+                border-radius: 5px;
+                padding: 5px;
+                height: 125px;
+                position:relative;
+                cursor: pointer;
+                z-index: 100;
+            }
+            .sessionItem.filtered > div
+            {
+                background-color: #3d3d66;
+            }
+            .sessionItem .sessionLanguage {
+                width: 25px;
+                bottom: 5px;
+                position: absolute;
+            }
+            .sessionItem.plenum > div {
+                z-index: 100;
+            }
+            .timeItem {
+                font-size:15px;
+            }
+            .modal-main {
+                background-color: #6667ab;
+                border-radius: 20px;
+                padding: 15px 15px 35px 15px;
+                color: #ffffff;
+                z-index: 1000;
+            }
+
+            .modal-main .speakerImage {
+                float: left;
+                width: 50px;
+                border-radius: 5px;
+            }
+            .modal-main .speakerName {
+                float:left;
+                padding-left: 15px;
+                padding-top: 5px;
+                font-size: smaller;
+            }
+            .modal-main .speakerDetails {
+                margin-bottom: 5px;                
+                margin-top:10px;
+                height: 50px;
+                clear: both;
+            }
+            .modal-main .sessionLanguage {
+                position: absolute;
+                bottom: 5px;
+                width: 25px;
+            }
+            .dayTitle {
+                clear: both;
+            }
+        </style>
+        <style>
+            .modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width:100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.6);
+                z-index: 900;
+            }
+
+            .modal-main {
+                position:fixed;
+                /*background: white;*/
+                width: 80%;
+                height: auto;
+                top:50%;
+                left:50%;
+                transform: translate(-50%,-50%);
+            }
+
+            .display-block {
+                display: block;
+            }
+
+            .display-none {
+                display: none;
+            }
+        </style>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -90,7 +222,7 @@
             }
         }
         $(document).ready(function () {
-            window.szContentLoaded = window.setInterval(checkContentLoaded,500);
+            //window.szContentLoaded = window.setInterval(checkContentLoaded,500);
         });
     </script>
 </head>
@@ -104,7 +236,6 @@
                 <li><a href="sessions.html">Sessions</a></li>
                 <li><a href="sponsors.html">Sponsors</a></li>
                 <li><a href="schedule.html">Schedule</a></li>
-                <li><a href="communityzone.html">Altspace</a></li>
                 <li class="last"><a href="HowToAttend.html">How to Attend</a></li>
                 <!--<li class="hidden"><a href="help.html">Help</a></li>-->
             </ul>
@@ -127,8 +258,17 @@
 
         <p><b><i>Times shown for sessions are in <span id="timezone">your local time</span>.</i></b><br />
         Schedule subject to change</p>
+
+        
     </div>
-    <script type="text/javascript" src="https://sessionize.com/api/v2/xtw9j3c2/view/GridSmart"></script>
+    <div id="schedule">
+    </div>
+    <!--<script type="text/javascript" src="https://sessionize.com/api/v2/xtw9j3c2/view/GridSmart"></script>-->
+    <script src="./scripts/EMG-schedule.js"></script>
+    
+    <script>
+        EMG.renderSchedule("https://sessionize.com/api/v2/pia3gis3", document.getElementById("schedule"), []);
+    </script>
     
 </body>
 </html>

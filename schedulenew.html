@@ -32,7 +32,7 @@
                 height: 100px;                
             }
             .sessionItem h2 {
-                font-size:15px;
+                font-size:12px;
                 clear: both;
             }
             .sessionItem .speakerImage {
@@ -236,7 +236,6 @@
                 <li><a href="sessions.html">Sessions</a></li>
                 <li><a href="sponsors.html">Sponsors</a></li>
                 <li><a href="schedule.html">Schedule</a></li>
-                <li><a href="communityzone.html">Altspace</a></li>
                 <li class="last"><a href="HowToAttend.html">How to Attend</a></li>
                 <!--<li class="hidden"><a href="help.html">Help</a></li>-->
             </ul>
@@ -260,14 +259,15 @@
         <p><b><i>Times shown for sessions are in <span id="timezone">your local time</span>.</i></b><br />
         Schedule subject to change</p>
 
-        <div id="schedule">
-        </div>
+        
+    </div>
+    <div id="schedule">
     </div>
     <!--<script type="text/javascript" src="https://sessionize.com/api/v2/xtw9j3c2/view/GridSmart"></script>-->
     <script src="./scripts/EMG-schedule.js"></script>
     
     <script>
-        EMG.renderSchedule("https://sessionize.com/api/v2/pia3gis3", document.getElementById("schedule"), ["Language","Tags"]);
+        EMG.renderSchedule("https://sessionize.com/api/v2/pia3gis3", document.getElementById("schedule"), []);
     </script>
     
 </body>

@@ -4,6 +4,9 @@
     margin-right: auto ;
     font-family:verdana, helvetica, sans-serif;
   }
+  #schedule {
+      font-family: verdana, helvetica, sans-serif;
+  }
   .clear
   {
       clear: both;
