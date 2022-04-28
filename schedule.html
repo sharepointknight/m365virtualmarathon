@@ -108,6 +108,23 @@
             }
             .dayTitle {
                 clear: both;
+            }            
+            .sessionTags {
+                float: right;
+            }
+            .sessionTags > span {
+                padding: 5px;
+                border-radius: 5px;
+                margin-right: 5px;
+                color: black;
+                background-color: white;
+            }
+            .noRecord
+            {
+                width: 20px;
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
             }
         </style>
         <style>
@@ -267,7 +284,13 @@
     <script src="./scripts/EMG-schedule.js"></script>
     
     <script>
-        EMG.renderSchedule("https://sessionize.com/api/v2/pia3gis3", document.getElementById("schedule"), []);
+        var config = {
+                filters: [], //["Language","Tags"],
+                promotedFields: ["Tags"],
+                languageField: "Language",
+                recordedField: "Are you ok with this session being recorded? "
+            }
+            EMG.renderSchedule("https://sessionize.com/api/v2/pia3gis3", document.getElementById("schedule"), config);
     </script>
     
 </body>

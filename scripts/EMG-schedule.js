@@ -1046,12 +1046,16 @@ var Schedule = /** @class */ (function (_super) {
     }
     Schedule.prototype.getData = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var sessionizeService, sessions, schedule, speakers, selectedDate, filters, idx, f;
+            var sessionizeService, promotedFields, sessions, schedule, speakers, selectedDate, filters, idx, f;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         sessionizeService = new SessionizeService_1.default(this.props.embedURL);
-                        return [4 /*yield*/, sessionizeService.GetSessions()];
+                        promotedFields = this.props.promotedFields;
+                        if (promotedFields == null) {
+                            promotedFields = [];
+                        }
+                        return [4 /*yield*/, sessionizeService.GetSessions(promotedFields)];
                     case 1:
                         sessions = _a.sent();
                         return [4 /*yield*/, sessionizeService.GetSchedule(sessions)];
@@ -1156,7 +1160,7 @@ var Schedule = /** @class */ (function (_super) {
         var roomNames = Object.keys(todaySchedule).sort();
         var filters = null;
         var filterVals = {};
-        debugger;
+        //debugger;
         for (var i = 0; i < roomNames.length; i++) {
             var sessions = todaySchedule[roomNames[i]];
             gridStyle.gridTemplateColumns += " 200px";
@@ -1229,7 +1233,7 @@ var Schedule = /** @class */ (function (_super) {
                     return React.createElement("li", { className: "datePicker", onClick: _this.setSelectedDate.bind(_this, s) }, day.format("dddd"));
                 })) : null,
                 React.createElement("h1", { className: "dayTitle" }, dayjs(this.state.SelectedDate).format("dddd, MM/DD/YYYY"))),
-            React.createElement(SessionModal_1.default, { show: this.state.SelectedSession != null, Session: this.state.SelectedSession, Speakers: this.state.Speakers, handleClose: this.closeModal.bind(this) }),
+            React.createElement(SessionModal_1.default, { show: this.state.SelectedSession != null, Session: this.state.SelectedSession, Speakers: this.state.Speakers, handleClose: this.closeModal.bind(this), LanguageField: this.props.languageField, RecordedField: this.props.recordedField }),
             React.createElement("div", { className: "EMGGrid", style: gridStyle },
                 React.createElement("span", { className: "gridItem", style: { gridColumn: "1/" + (roomNames.length + 1), gridRow: "1/" + (lastStart.length + 1) } }, "\u00A0"),
                 lastStart.map(function (t, idx) {
@@ -1251,11 +1255,11 @@ var Schedule = /** @class */ (function (_super) {
                                 if (s.isPlenumSession) {
                                     var width = roomNames.length * 200;
                                     session = React.createElement("span", { className: "gridItem sessionItem plenum " + ((filtered) ? "filtered" : ""), style: { gridArea: tIdx + 2 + " / 2", width: width + "px" }, onClick: _this.setSelectedSession.bind(_this, s) },
-                                        React.createElement(ScheduleSession_1.default, { Session: s, Speakers: _this.state.Speakers }));
+                                        React.createElement(ScheduleSession_1.default, { Session: s, Speakers: _this.state.Speakers, LanguageField: _this.props.languageField, RecordedField: _this.props.recordedField }));
                                 }
                                 else {
                                     session = React.createElement("span", { className: "gridItem sessionItem " + ((filtered) ? "filtered" : ""), style: { gridArea: tIdx + 2 + " / " + (ridx + 2) }, onClick: _this.setSelectedSession.bind(_this, s), key: s.id },
-                                        React.createElement(ScheduleSession_1.default, { Session: s, Speakers: _this.state.Speakers }));
+                                        React.createElement(ScheduleSession_1.default, { Session: s, Speakers: _this.state.Speakers, LanguageField: _this.props.languageField, RecordedField: _this.props.recordedField }));
                                 }
                                 return session;
                             }));
@@ -2327,7 +2331,8 @@ var ScheduleSession = /** @class */ (function (_super) {
         return React.createElement("div", null,
             speakerDetails,
             React.createElement("h2", null, this.props.Session.title),
-            (this.props.Session.Language != null && this.props.Session.Language.length > 0) ? React.createElement("img", { className: "sessionLanguage", src: "images/" + this.props.Session.Language + ".png", alt: this.props.Session.Language }) : null);
+            (this.props.Session[this.props.LanguageField] != null && this.props.Session[this.props.LanguageField].length > 0) ? React.createElement("img", { className: "sessionLanguage", src: "images/" + this.props.Session[this.props.LanguageField] + ".png", alt: this.props.Session[this.props.LanguageField] }) : null,
+            (this.props.Session[this.props.RecordedField] != null && this.props.Session[this.props.RecordedField] != "Yes") ? React.createElement("img", { className: 'noRecord', src: 'images/NoRecording.png', alt: 'Session recording will not be posted', title: 'Session recording will not be posted' }) : null);
     };
     return ScheduleSession;
 }(React.Component));
@@ -2369,6 +2374,12 @@ var SessionModal = /** @class */ (function (_super) {
         var speakers = this.props.Session.speakers.map(function (sp) {
             return _this.props.Speakers[sp.id];
         });
+        var tags = null;
+        if (this.props.Session.tags != null) {
+            tags = this.props.Session.tags.map(function (t) {
+                return React.createElement("span", null, t);
+            });
+        }
         return React.createElement("div", { className: showHideClassName, onClick: this.props.handleClose },
             React.createElement("section", { className: "modal-main", onClick: function (e) { e.stopPropagation(); } },
                 React.createElement("h2", { className: "sessionTitle" }, this.props.Session.title),
@@ -2379,7 +2390,9 @@ var SessionModal = /** @class */ (function (_super) {
                             React.createElement("img", { src: s.profilePicture, alt: s.fullName, className: "speakerImage" }),
                             React.createElement("h3", { className: "speakerName" }, s.fullName)));
                 })),
-                (this.props.Session.Language != null && this.props.Session.Language.length > 0) ? React.createElement("img", { className: "sessionLanguage", src: "images/" + this.props.Session.Language + ".png", alt: this.props.Session.Language }) : null));
+                (this.props.Session[this.props.LanguageField] != null && this.props.Session[this.props.LanguageField].length > 0) ? React.createElement("img", { className: "sessionLanguage", src: "images/" + this.props.Session[this.props.LanguageField] + ".png", alt: this.props.Session[this.props.LanguageField] }) : null,
+                (this.props.Session[this.props.RecordedField] != null && this.props.Session[this.props.RecordedField] != "Yes") ? React.createElement("img", { className: 'noRecord', src: 'images/NoRecording.png', alt: 'Session recording will not be posted', title: 'Session recording will not be posted' }) : null,
+                React.createElement("div", { className: "sessionTags" }, tags)));
     };
     return SessionModal;
 }(React.Component));
@@ -2396,13 +2409,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(1);
 var ReactDOM = __webpack_require__(12);
 var Schedule_1 = __webpack_require__(11);
+var ScheduleConfig = /** @class */ (function () {
+    function ScheduleConfig() {
+        this.languageField = "Language";
+        this.recordedField = "Recorded";
+    }
+    return ScheduleConfig;
+}());
 window["EMG"] = window["EMG"] || {};
-window["EMG"].renderSchedule = function (embedUrl, containingElement, filters) {
+window["EMG"].renderSchedule = function (embedUrl, containingElement, config) {
     if (typeof (containingElement) === "string") {
         containingElement = document.getElementById(containingElement);
     }
     if (typeof (containingElement) === "object" && containingElement.innerText != null) {
-        ReactDOM.render(React.createElement(Schedule_1.default, { embedURL: embedUrl, filters: filters }), containingElement);
+        if (config.filters == null) {
+            config.filters = [];
+        }
+        if (config.promotedFields == null) {
+            config.promotedFields = [];
+        }
+        ReactDOM.render(React.createElement(Schedule_1.default, { embedURL: embedUrl, filters: config.filters, promotedFields: config.promotedFields, languageField: config.languageField, recordedField: config.recordedField }), containingElement);
     }
     else {
         console.error("EMG: Unable to render schedule due to invalid parameter");
@@ -2479,7 +2505,7 @@ var SessionizeService = /** @class */ (function () {
             });
         });
     };
-    SessionizeService.prototype.GetSessions = function () {
+    SessionizeService.prototype.GetSessions = function (fieldsToPromote) {
         return __awaiter(this, void 0, void 0, function () {
             var reqUrl, resp, sessions;
             var _this = this;
@@ -2490,18 +2516,26 @@ var SessionizeService = /** @class */ (function () {
                         return [4 /*yield*/, axios_1.default.get(reqUrl)];
                     case 1:
                         resp = _a.sent();
+                        debugger;
                         sessions = resp.data[0].sessions.map(function (x) {
                             x.startAtLocal = _this.formatDate(x.startsAt, "full");
                             x.sessionDate = _this.formatDate(x.startsAt, "dateOnly");
                             x.endsAtLocal = _this.formatDate(x.endsAt, "full");
+                            x.tags = [];
                             if (x.categories != null) {
                                 for (var idx = 0; idx < x.categories.length; idx++) {
                                     var cat = x.categories[idx];
                                     if (cat.categoryItems.length == 1) {
                                         x[cat.name] = cat.categoryItems[0].name;
+                                        if (fieldsToPromote.indexOf(cat.name) >= 0) {
+                                            x.tags = x.tags.concat(cat.categoryItems[0].name);
+                                        }
                                     }
                                     else {
                                         x[cat.name] = cat.categoryItems.map(function (X) { return X.name; });
+                                        if (fieldsToPromote.indexOf(cat.name) >= 0) {
+                                            x.tags = x.tags.concat(x[cat.name]);
+                                        }
                                     }
                                 }
                             }
