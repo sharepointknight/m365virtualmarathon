@@ -9,7 +9,7 @@ body {
     width:1280px;
     height:720px;
     margin:auto;
-    background-image: url(../images/SessionIntroBackground.png);
+    background-image: url(../images/MICROSOFT\ 365\ VIRTUAL\ MARATHON\ 2022.png);
     background-repeat: no-repeat;
     position: relative;
 }
@@ -18,7 +18,7 @@ body {
 }
 .header {
     height:200px;
-    background-color: #008795;
+    background-color: #6667ab;
 }
 .header .left {
     float: left;
@@ -36,8 +36,9 @@ body {
     font-weight: bold;
     text-align: center;
     position: relative;
-    top: 295px;
+    top: 250px;
     max-width: 1280px;
+    color:#6667ab;
 }
 .sessionSpeakers {
     margin-left: auto;
@@ -46,9 +47,9 @@ body {
     font-size: 34px;
     font-weight: bold;
     text-align: center;
-    color: #1f959e;
+    color: #6667ab;
     position: absolute;
-    top: 400px;
+    top: 350px;
     width: 1280px;
 }
 .sessionCountdown {
@@ -56,8 +57,8 @@ body {
     font-size: 31px;
     text-align: center;
     position: absolute;
-    bottom: 75px;
-    color: #1f959e;
+    bottom: 125px;
+    color: #6667ab;
     margin-left: 150px;
 }
 .sessionCountdown span {
@@ -78,7 +79,7 @@ body {
 .sponsorIntro {
     font-weight: bold;
     font-size: 20px;
-    color: #1f959e;
+    color: #6667ab;
 }
 .contentSlider {
     max-width: 367px;
@@ -104,11 +105,11 @@ body {
 .upcomingIntro {
     font-weight: bold;
     font-size: 20px;
-    color: #1f959e;
+    color: #6667ab;
 }
 .upcomingContent {
     font-size: 8px;
-    color: #1f959e;
+    color: #6667ab;
 }
 
 .emgSpinner { 
