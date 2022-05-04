@@ -9769,6 +9769,7 @@ var SessionIntro = /** @class */ (function (_super) {
         if (this.state.RemainingTime.Hours != "0") {
             hours = this.state.RemainingTime.Hours + ":";
         }
+        hours = null;
         return React.createElement("div", null,
             React.createElement("div", { className: "sessionTitle" }, this.state.Session.title),
             React.createElement("div", { className: "sessionSpeakers" }, this.state.Session.speakers.map(function (s) { return s.name; }).join(", ")),
