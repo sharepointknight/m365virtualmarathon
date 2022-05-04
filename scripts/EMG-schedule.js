@@ -2380,6 +2380,12 @@ var SessionModal = /** @class */ (function (_super) {
                 return React.createElement("span", null, t);
             });
         }
+        var showJoin = false;
+        var diff = (new Date()).valueOf() - sessionStart.valueOf();
+        if (diff <= 900000 && diff >= -2700000) // current time between 15 minutes before and 45 minutes after
+         {
+            showJoin = true;
+        }
         return React.createElement("div", { className: showHideClassName, onClick: this.props.handleClose },
             React.createElement("section", { className: "modal-main", onClick: function (e) { e.stopPropagation(); } },
                 React.createElement("h2", { className: "sessionTitle" }, this.props.Session.title),
@@ -2390,6 +2396,7 @@ var SessionModal = /** @class */ (function (_super) {
                             React.createElement("img", { src: s.profilePicture, alt: s.fullName, className: "speakerImage" }),
                             React.createElement("h3", { className: "speakerName" }, s.fullName)));
                 })),
+                (showJoin) ? React.createElement("a", { className: "joinButton", target: "joinSession", href: this.props.Session.liveUrl }, "Join Session") : null,
                 (this.props.Session[this.props.LanguageField] != null && this.props.Session[this.props.LanguageField].length > 0) ? React.createElement("img", { className: "sessionLanguage", src: "images/" + this.props.Session[this.props.LanguageField] + ".png", alt: this.props.Session[this.props.LanguageField] }) : null,
                 (this.props.Session[this.props.RecordedField] != null && this.props.Session[this.props.RecordedField] != "Yes") ? React.createElement("img", { className: 'noRecord', src: 'images/NoRecording.png', alt: 'Session recording will not be posted', title: 'Session recording will not be posted' }) : null,
                 React.createElement("div", { className: "sessionTags" }, tags)));
@@ -2516,7 +2523,6 @@ var SessionizeService = /** @class */ (function () {
                         return [4 /*yield*/, axios_1.default.get(reqUrl)];
                     case 1:
                         resp = _a.sent();
-                        debugger;
                         sessions = resp.data[0].sessions.map(function (x) {
                             x.startAtLocal = _this.formatDate(x.startsAt, "full");
                             x.sessionDate = _this.formatDate(x.startsAt, "dateOnly");
