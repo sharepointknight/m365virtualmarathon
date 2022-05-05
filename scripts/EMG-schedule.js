@@ -2381,7 +2381,7 @@ var SessionModal = /** @class */ (function (_super) {
             });
         }
         var showJoin = false;
-        var diff = (new Date()).valueOf() - sessionStart.valueOf();
+        var diff = sessionStart.valueOf() - (new Date()).valueOf();
         if (diff <= 900000 && diff >= -2700000) // current time between 15 minutes before and 45 minutes after
          {
             showJoin = true;
